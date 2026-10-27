@@ -1,0 +1,363 @@
+/* Variables de color y fuentes */
+:root {
+    --rosa-pastel: #FFC6FF;
+    --azul-cielo: #9EEAFB;
+    --azul-oscuro: #4A90E2;
+    --blanco: #FFFFFF;
+    --texto: #4A4A4A;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--texto);
+    overflow-x: hidden;
+    background-color: #dac7c776;
+}
+
+/* Fondo con efecto Parallax al deslizar */
+/* Reemplaza esta sección en tu style.css */
+.parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130%; /* Mantiene el espacio para el movimiento al deslizar */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    transform: translateY(0);
+    /* Agrega esta línea para que la transición entre imágenes sea suave */
+    transition: transform 0.9s linear, background-image 2s ease-in-out;
+}
+
+/* Capa semitransparente opcional para suavizar las imágenes */
+.parallax-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); 
+}
+
+/* Encabezado / Menú */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background: rgba(253, 253, 253, 0.692);
+    backdrop-filter: blur(1px);
+    z-index: 1000;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-family: 'Sacramento', cursive;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: var(--azul-oscuro);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--texto);
+    margin-left: 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--azul-oscuro);
+}
+
+/* Sección Hero (Bienvenida) */
+.hero {
+    background: rgba(245, 12, 171, 0.3);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    color: #000021;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow:3px 3px 4px rgba(215, 210, 210, 1);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #000000;
+    text-shadow:1px 1px 2px rgba(215, 210, 210, 1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: var(--blanco);
+    color: var(--azul-oscuro);
+    border: 2px solid var(--azul-oscuro);
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+}
+
+.btn:hover {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+}
+
+/* Sección Beneficios */
+section {
+    padding: 5rem 5%;
+    text-align: center;
+}
+
+section h2 {
+    color: #0f000a;
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+    text-shadow:3px 3px 4px rgba(215, 210, 210, 1);
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rosa-pastel), var(--azul-cielo));
+    border-radius: 2px;
+}
+
+.grid-beneficios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.tarjeta-beneficio {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.tarjeta-beneficio:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(255, 198, 255, 0.5);
+}
+
+.tarjeta-beneficio h3 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Carrusel Infinito de derecha a izquierda */
+.galeria-section {
+    background: rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+}
+
+.carrusel-contenedor {
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+
+.carrusel-track {
+    display: flex;
+    width: calc(300px * 10);
+    animation: desplazarCarrusel 25s linear infinite; 
+}
+
+
+.carrusel-item {
+    height: 300px;
+    display: flex;
+    padding: 0 15px;
+    transition: transform 0.3s ease;
+}
+
+.carrusel-item img {
+    width: 300px;
+    border-radius: 35px;
+    box-shadow: 0 8px 20px rgba(208, 19, 19, 0.1);
+}
+
+.carrusel-item:hover {
+    transform: scale(1.2);
+}
+
+@keyframes desplazarCarrusel {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-300px * 5)); /* Se desplaza la mitad exacta para el loop infinito */
+    }
+}
+
+/* Sección de Videos */
+.grid-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+   
+    margin: 0 auto;
+}
+
+.video-contenedor {
+    position: relative;
+    padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+    height: 600px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    align-items: center;
+}
+.video-contenedor video {
+    position:center;
+    top: 0;
+    left: 0;
+    height: 600px;
+    border-radius: 50px;
+    loop: true;
+}
+
+/* Formulario de Contacto */
+.contacto-section {
+    
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.formulario {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    text-align: left;
+    position: relative;
+}
+
+.grupo-input {
+    margin-bottom: 1.5rem;
+}
+
+.grupo-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.grupo-input input,
+.grupo-input select,
+.grupo-input textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.grupo-input input:focus,
+.grupo-input select:focus,
+.grupo-input textarea:focus {
+    outline: none;
+    border-color: var(--azul-oscuro);
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    cursor: pointer;
+    border: none;
+}
+
+/* Animaciones mediante Clases de Scroll */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: mostrarContenido 1s forwards ease-out;
+}
+
+.scroll-anim {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-anim.activo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes mostrarContenido {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    background: #33333333;
+    color: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    
+}
+
+/* Ajustes Responsivos (Móviles) */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    nav {
+        margin-top: 1rem;
+    }
+    nav a {
+        margin: 0 0.5rem;
+    }
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+}
