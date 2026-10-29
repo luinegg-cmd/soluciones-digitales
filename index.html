@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitaciones de Calidad | Digitales e Innovadoras</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts para una tipografía elegante -->
+    <link href="https://googleapis.com" rel="family">
+    
+  <link rel="preload" as="image" href="bautizo.png" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo0.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo1.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo2.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo3.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo4.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo5.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="invita.png" fetchpriority="high">
+  <link rel="preload" as="image" href="quince.png" fetchpriority="high">
+</head>
+<body>
+
+    <!-- Fondo con movimiento interactivo -->
+    <div class="parallax-bg"></div>
+
+    <!-- Encabezado / Menú -->
+    <header>
+        <div class="logo">SD Soluciones Digitales</div>
+        <nav>
+            <a href="#beneficios">¿Por qué digital?</a>
+            <a href="#galeria">Galería</a>
+            <a href="#videos">Economicas</a>
+            <a href="#contacto">Pedir Info</a>
+        </nav>
+    </header>
+
+    <!-- Sección Hero (Bienvenida) -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1>Haz que tu evento comience desde la invitación</h1>
+            <p>Elegantes, ecológicas y completamente personalizadas.</p>
+            <a href="#contacto" class="btn">Crear mi invitación</a>
+        </div>
+    </section>
+
+    <!-- Sección de Beneficios -->
+    <section id="beneficios" class="beneficios scroll-anim">
+        <h2>¿Por qué elegir una Invitación Digital?</h2>
+        <div class="grid-beneficios">
+            <div class="tarjeta-beneficio">
+                <h3>🌱 Ecológicas</h3>
+                <p>Reduce el uso de papel y cuida el medio ambiente con un formato 100% digital.</p>
+            </div>
+            <div class="tarjeta-beneficio">
+                <h3>⚡ Envío Instantáneo</h3>
+                <p>Compártela con todos tus invitados en segundos por WhatsApp o redes sociales.</p>
+            </div>
+            <div class="tarjeta-beneficio">
+                <h3>📍 Interactiva</h3>
+                <p>Incluye mapas con GPS, confirmación de asistencia en tiempo real, música y contadores.</p>
+            </div>
+            <div class="tarjeta-beneficio">
+                <h3>💰 Económica</h3>
+                <p>Ahorra costos de impresión y distribución sin perder la elegancia ni el estilo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Galería (Carrusel infinito de derecha a izquierda) -->
+    <section id="galeria" class="galeria-section">
+        <h2>Diferentes Diseños</h2>
+        <div class="carrusel-contenedor">
+            <div class="carrusel-track">
+                <!-- Reemplaza las URLs de las imágenes con las de tus fotos -->
+                <div class="carrusel-item"><img src="invita.png" alt="Invitación Boda"></div>
+                <div class="carrusel-item"><img src="quince.png" alt="Invitación XV Años"></div>
+                <div class="carrusel-item"><img src="bautizo.png" alt="Invitación Bautizo"></div>
+                <div class="carrusel-item"><video loop autoplay muted src="tres.mp4"></video></div>
+                <!-- Duplicados para el efecto infinito continuo -->
+                <div class="carrusel-item"><img src="invita.png" alt="Invitación Boda"></div>
+                <div class="carrusel-item"><img src="quince.png" alt="Invitación XV Años"></div>
+                <div class="carrusel-item"><img src="bautizo.png" alt="Invitación Bautizo"></div>
+                <div class="carrusel-item"><video loop autoplay muted src="tres.mp4"></video></div>
+            </div>
+        </div>
+        </section>
+
+    <!-- Sección de Videos de Ejemplo -->
+    <section id="videos" class="videos-section scroll-anim">
+        <h2>Invitaciones sencillas como video</h2>
+        <div class="grid-videos">
+            <!-- Reemplaza el src con los enlaces de tus videos (pueden ser de YouTube, Vimeo o archivos locales) -->
+            <div class="video-contenedor">
+                <video loop autoplay muted controls src="uno.mp4"></video>
+            </div>
+            <div class="video-contenedor">
+                <video loop autoplay muted controls src="dos.mp4"></video>
+            </div>
+        </div>
+    </section>
+<!-- Sección de Formulario / Contacto -->
+    <section id="contacto" class="contacto-section scroll-anim">
+        <h2>¡Pide la tuya ahora!</h2>
+        <p>Déjanos tus datos y nos comunicaremos contigo de inmediato por WhatsApp.</p>
+        <form id="form-invitacion" class="formulario">
+            <div class="grupo-input">
+                <label for="nombre">Tu Nombre:</label>
+                <input type="text" id="nombre" required placeholder="Ej. María López">
+            </div>
+            <div class="grupo-input">
+                <label for="evento">Tipo de Evento:</label>
+                <select id="evento" required>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="Boda">Boda</option>
+                    <option value="XV Años">XV Años</option>
+                    <option value="Bautizo">Bautizo</option>
+                    <option value="3años">3 Años</option>
+                    <option value="Cumpleaños">Cumpleaños</option>
+                    <option value="Revelacion">Revelacion</option>
+                    <option value="Otro">Otro Evento</option>
+                </select>
+            </div>
+            <div class="grupo-input">
+                <label for="detalles">Detalles adicionales:</label>
+                <textarea id="detalles" rows="4" placeholder="Cuéntanos la fecha tentativa o temática que te gustaría..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-submit">Enviar a WhatsApp 🚀</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Invitaciones de Calidad. Diseños mágicos para momentos inolvidables.</p>
+    </footer>
+
+    <!-- Vinculación del archivo JS externo -->
+    <script src="script.js"></script>
+</body>
+</html>
