@@ -28,12 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(cambiarImagenFondo, 5000);
 
 
-    // --- 2. MOVIMIENTO DEL FONDO (PARALLAX EFFECT) ---
-    window.addEventListener("scroll", () => {
-        let despliegueScroll = window.scrollY;
-        fondo.style.transform = `translateY(${despliegueScroll * 0.15}px)`;
-    });
-
 
     // --- 3. ANIMACIÓN DE COMPONENTES AL HACER SCROLL ---
     const elementosAnimados = document.querySelectorAll(".scroll-anim");
