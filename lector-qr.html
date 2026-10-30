@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recepción - Lector QR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  padding: 25px 15px;
+  background: linear-gradient(135deg, #eee1d2, #c7aa8d);
+  font-family: 'Montserrat', sans-serif;
+  color: #5e493b;
+}
+
+.contenedor {
+  max-width: 480px;
+  margin: auto;
+  padding: 30px 22px;
+  border-radius: 18px;
+  background: #fffaf5;
+  text-align: center;
+  box-shadow: 0 15px 45px #59402d30;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  font-weight: normal;
+  color: #a17b59;
+  margin-bottom: 8px;
+}
+
+.subtitulo {
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+}
+
+#lector {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+#lector video {
+  border-radius: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 30px;
+  background: #a17b59;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #79583e;
+}
+
+#resultado {
+  display: none;
+  margin-top: 25px;
+  padding: 22px;
+  background: #f5eee7;
+  border: 1px solid #e4d2bf;
+  border-radius: 12px;
+  text-align: left;
+}
+
+#resultado h2 {
+  font-family: 'Great Vibes', cursive;
+  text-align: center;
+  font-size: 38px;
+  color: #a17b59;
+  margin-bottom: 15px;
+}
+
+.dato {
+  padding: 12px 0;
+  border-bottom: 1px solid #e2d3c5;
+  font-size: 14px;
+}
+
+.dato strong {
+  color: #a17b59;
+}
+
+.total {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.estado {
+  margin-top: 18px;
+  padding: 13px;
+  border-radius: 8px;
+  text-align: center;
+  background: #e3f2e4;
+  color: #286b38;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.error {
+  background: #f9e4e1;
+  color: #a52b20;
+}
+
+.nota {
+  margin-top: 22px;
+  font-size: 11px;
+  color: #927f70;
+  line-height: 1.6;
+}
+
+#estadoCamara {
+  font-size: 12px;
+  margin-top: 12px;
+  color: #927f70;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+  <h1>Nuestra Boda</h1>
+  <p class="subtitulo">Recepción de invitados</p>
+
+  <div id="lector"></div>
+
+  <p id="estadoCamara">Presiona iniciar para activar la cámara.</p>
+
+  <button id="iniciar">Iniciar escáner</button>
+  <button id="detener" style="display:none; background:#78695d;">
+    Detener cámara
+  </button>
+
+  <div id="resultado">
+
+    <h2>Invitación encontrada</h2>
+
+    <div class="dato">
+      <strong>Invitado:</strong>
+      <span id="nombre"></span>
+    </div>
+
+    <div class="dato">
+      <strong>Adultos autorizados:</strong>
+      <span id="adultos"></span>
+    </div>
+
+    <div class="dato">
+      <strong>Niños autorizados:</strong>
+      <span id="ninos"></span>
+    </div>
+
+    <div class="dato total">
+      Total de personas:
+      <span id="total"></span>
+    </div>
+
+    <div class="estado" id="estado">
+      QR leído correctamente
+    </div>
+
+    <button id="nuevo">Escanear otro invitado</button>
+
+  </div>
+
+  <p class="nota">
+    Coloca el código QR frente a la cámara para consultar los datos de la invitación.
+  </p>
+
+</div>
+
+<script>
+let escaner = null;
+let procesando = false;
+
+const iniciar = document.getElementById("iniciar");
+const detener = document.getElementById("detener");
+const resultado = document.getElementById("resultado");
+const estadoCamara = document.getElementById("estadoCamara");
+
+async function iniciarEscaner() {
+
+  if (!window.isSecureContext) {
+    estadoCamara.textContent =
+      "Abre esta página desde HTTPS o localhost para usar la cámara.";
+    return;
+  }
+
+  iniciar.disabled = true;
+  estadoCamara.textContent = "Solicitando acceso a la cámara...";
+
+  try {
+    if (!escaner) {
+      escaner = new Html5Qrcode("lector");
+    }
+
+    await escaner.start(
+      { facingMode: "environment" },
+      {
+        fps: 10,
+        qrbox: { width: 230, height: 230 }
+      },
+      texto => {
+        if (procesando) return;
+        procesando = true;
+        leerQR(texto);
+      },
+      () => {}
+    );
+
+    iniciar.style.display = "none";
+    detener.style.display = "block";
+    estadoCamara.textContent = "Cámara activa. Escanea un código QR.";
+
+  } catch (error) {
+    iniciar.disabled = false;
+    estadoCamara.textContent =
+      "No se pudo activar la cámara. Revisa los permisos del navegador.";
+  }
+}
+
+async function detenerEscaner() {
+  if (escaner && escaner.isScanning) {
+    try {
+      await escaner.stop();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  detener.style.display = "none";
+  iniciar.style.display = "block";
+  iniciar.disabled = false;
+  estadoCamara.textContent = "Escáner detenido.";
+}
+
+function leerQR(texto) {
+
+  try {
+    const datos = JSON.parse(texto);
+
+    if (
+      !datos ||
+      typeof datos.invitado !== "string" ||
+      !Number.isInteger(datos.adultos) ||
+      !Number.isInteger(datos.ninos) ||
+      datos.adultos < 0 ||
+      datos.ninos < 0 ||
+      datos.adultos + datos.ninos < 1 ||
+      datos.adultos > 30 ||
+      datos.ninos > 30 ||
+      datos.total !== datos.adultos + datos.ninos
+    ) {
+      throw new Error("Datos incompletos o incorrectos");
+    }
+
+    document.getElementById("nombre").textContent = datos.invitado;
+    document.getElementById("adultos").textContent = datos.adultos;
+    document.getElementById("ninos").textContent = datos.ninos;
+    document.getElementById("total").textContent = datos.total;
+
+    document.getElementById("estado").textContent =
+      "✓ Invitación leída correctamente";
+
+    document.getElementById("estado").className = "estado";
+
+    resultado.style.display = "block";
+    estadoCamara.textContent = "Invitación encontrada.";
+
+    detenerEscaner();
+
+  } catch (error) {
+
+    document.getElementById("nombre").textContent = "QR no válido";
+    document.getElementById("adultos").textContent = "-";
+    document.getElementById("ninos").textContent = "-";
+    document.getElementById("total").textContent = "-";
+
+    document.getElementById("estado").textContent =
+      "Este código no contiene una invitación válida.";
+
+    document.getElementById("estado").className = "estado error";
+    resultado.style.display = "block";
+
+    detenerEscaner();
+  }
+}
+
+iniciar.addEventListener("click", iniciarEscaner);
+detener.addEventListener("click", detenerEscaner);
+
+document.getElementById("nuevo").addEventListener("click", async () => {
+  resultado.style.display = "none";
+  procesando = false;
+  await iniciarEscaner();
+});
+</script>
+
+</body>
+</html>
